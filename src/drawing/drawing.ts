@@ -7,7 +7,7 @@ import { MsgToFront } from "../utils/interfaces";
 robot.setMouseDelay(2);
 let msgToFront: MsgToFront = '';
 
-const drawing = (data: string) => {
+const draw = (data: string) => {
   let command = data.split(' ');
   let figure = command[0];
   let width = +command[1];
@@ -22,4 +22,4 @@ const drawing = (data: string) => {
   return msgToFront;
 }
 
-export { drawing };
+export { draw };
