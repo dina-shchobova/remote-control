@@ -35,5 +35,5 @@ const navigate = (data: string) => {
   }
 }
 
-export { navigate, mouse };
+export { navigate };
 
