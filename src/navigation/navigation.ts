@@ -1,7 +1,7 @@
 import robot from 'robotjs';
 
 robot.setMouseDelay(2);
-var mouse = robot.getMousePos();
+let mouse = robot.getMousePos();
 
 const navigate = (data: string) => {
   let command = data.split(' ');
