@@ -17,7 +17,8 @@ const print = async () => {
   });
 
   const base64Img = await jimp.getBase64Async(Jimp.MIME_PNG);
-  return base64Img.split(',')[1];
+  const base64 = base64Img.split(',')[1];
+  return `prnt_scrn ${base64}`
 
 }
 
