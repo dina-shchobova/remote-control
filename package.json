@@ -5,8 +5,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start:prod": "tsc && node ./dist/index.js",
-        "start:dev": "nodemon ./dist/index.js",
+        "start:front": "tsc && node ./dist/index.js",
+        "start": "tsc && node ./dist/backend.js",
+        "start:dev": "nodemon ./dist/backend.js",
         "compile": "tsc -watch"
     },
     "author": "Andrei Auchynnikau",
