@@ -1,4 +1,4 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, createWebSocketStream } from "ws";
 import { MsgToFront } from "./src/utils/interfaces";
 import { navigate } from "./src/navigation/navigation.js";
 import { draw } from "./src/drawing/drawing.js";
@@ -14,7 +14,11 @@ let msgToFront: MsgToFront = "";
 wss.on("connection", function connection(ws) {
   console.log(`The WebSocket is currently open\n`);
 
-  ws.on("message", async function message(data) {
+  const duplex = createWebSocketStream(ws, {
+    encoding: 'utf8', decodeStrings: false,
+  });
+
+  duplex.on("data", async function message(data) {
     let msgFromFront = data.toString();
     let indexUnderscore = msgFromFront.indexOf("_", 0);
     let verb = msgFromFront.slice(0, indexUnderscore);
@@ -32,14 +36,24 @@ wss.on("connection", function connection(ws) {
           break;
       }
       console.log(`Result: completed successfully\n`);
-      ws.send(`${(msgToFront)}\0`);
+      duplex.write(`${(msgToFront)}\0`);
     } catch (e) {
       console.log(`Result: error\n`);
-      ws.send(`${(msgFromFront)}\0`);
+      duplex.write(`${(msgFromFront)}\0`);
     }
 
   });
+
   ws.on("close", function close() {
     console.log("The WebSocket is currently closed\n");
   });
+
+  process.on('SIGINT', function() {
+    console.log('The WebSocket is currently closed\n');
+    wss.close();
+    process.exit(0);
+  });
+
 });
+
+
